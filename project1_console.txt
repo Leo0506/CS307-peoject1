@@ -1,56 +1,48 @@
 
 create table students (
-    student_ID int primary key ,
-    name char(40) not null,
+    student_id int primary key ,
+    name varchar(40) not null,
     gender int,
-    college_ID int references colleges(college_ID)
+    college_id int references colleges(college_id)
 
 );
 
 
 create table colleges (
-    college_ID serial primary key ,
-    Chinese_name char(20) not null ,
-    English_name char(20) not null ,
-    unique (Chinese_name),
-    unique (English_name)
+    college_id serial primary key ,
+    chinese_name varchar(20) not null ,
+    english_name varchar(20) not null ,
+    unique (chinese_name),
+    unique (english_name)
 );
 
 create table departments (
-    department_ID serial primary key ,
-    department_name char(40) not null,
+    department_id serial primary key ,
+    department_name varchar(40) not null,
     unique (department_name)
 );
 
 
-create table prerequisites (
-    prerequisites_ID serial primary key ,
-    logic int not null,
-    ID1 int ,
-    ID2 int ,
-    course_ID int references courses(course_ID)
-);
-
 create table prerequisites__courses(
-    PC_ID serial primary key ,
-    course_ID int references courses(course_ID) not null ,
-    prerequisites_ID int references prerequisites(prerequisites_ID) not null
+    pc_id serial primary key ,
+    course_id int references courses(course_id) not null ,
+    prerequisites bytea
 );
 
 
 create table classes (
-    class_ID serial primary key ,
-    class_name char(80) not null,
+    class_id serial primary key ,
+    class_name varchar(80) not null,
     total_capacity int,
-    course_ID int references courses(course_ID),
-    department_ID int references departments(department_ID)
+    course_id int references courses(course_id),
+    department_id int references departments(department_id)
 );
 
 
 create table courses(
-    course_ID serial primary key,
-    course_code char(20) not null,
-    course_name char(80) not null,
+    course_id serial primary key,
+    course_code varchar(20) not null,
+    course_name varchar(80) not null,
     course_hour int,
     course_credit int not null,
     unique (course_code)
@@ -58,37 +50,37 @@ create table courses(
 
 
 create table students__courses (
-    SC_ID serial primary key ,
-    student_ID int references students(student_ID) not null ,
-    course_ID int references courses(course_ID) not null
+    sc_id serial primary key ,
+    student_id int references students(student_id) not null ,
+    course_id int references courses(course_id) not null
 );
 
 create table teachers (
-    teacher_ID serial primary key ,
-    teacher_name char(40) not null
-
+    teacher_id serial primary key ,
+    teacher_name varchar(40) not null
 );
 
 
 create table classes__teachers (
-    CT_ID serial primary key ,
-    teacher_ID int references teachers(teacher_ID) not null ,
-    class_ID int references classes(class_ID) not null
+    ct_id serial primary key ,
+    teacher_id int references teachers(teacher_id) not null ,
+    class_id int references classes(class_id) not null
 );
 
 create table weeklists (
-        weeklist_ID serial primary key ,
-        weeks boolean[20] not null,
+        weeklist_id serial primary key ,
+        weeks boolean[] not null,
         unique (weeks)
 
 );
 
 create table classlists (
-    classlist_ID serial primary key ,
-    weeklist_ID int references weeklists(weeklist_ID) not null ,
-    class_ID int references classes(class_ID) not null ,
-    location char(80),
+    classlist_id serial primary key ,
+    weeklist_id int references weeklists(weeklist_id) not null ,
+    class_id int references classes(class_id) not null ,
+    location varchar(80),
     weekday int not null ,
     begin_time int not null ,
     end_time int not null
 );
+
